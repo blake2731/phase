@@ -20,7 +20,7 @@
   G.messageTimer = null;
   G.discoveryTimer = null;
   G.camera = { x: 0, y: 0 };
-  G.player = { x: 260, y: 1000, vx: 0, vy: 0, speed: 292, radius: 7, freqIndex: 0, cooldown: 0, trail: [], stillTime: 0 };
+  G.player = { x: 260, y: 1000, vx: 0, vy: 0, speed: 292, radius: 9, freqIndex: 0, cooldown: 0, trail: [], stillTime: 0 };
   G.state = {
     stage: "signal", area: "FIRST CLEARING", insight: 0, worldSense: false, complete: false, postGame: false,
     gateOpen: false, bridgeOpen: false, signalMet: false, signalAtBasin: false, phiRepaired: false,
@@ -63,7 +63,7 @@
   };
 
   G.makeNode = (prime, x, y, type = "resonator") => ({
-    prime, x, y, type, radius: type === "anchor" ? 22 : 34 + prime * 0.7,
+    prime, x, y, type, radius: type === "anchor" ? 25 : 38 + prime * 0.8,
     active: false, timer: 0, reject: 0, resonate: 0, phase: Math.random() * G.TAU
   });
 
@@ -152,7 +152,7 @@
     G.gameTime = 0; G.paused = false; p.x = 260; p.y = 1000; p.vx = 0; p.vy = 0; p.freqIndex = 0; p.cooldown = 0; p.trail.length = 0; p.stillTime = 0;
     Object.assign(s, { stage:"signal", area:"FIRST CLEARING", insight:0, worldSense:false, complete:false, postGame:false, gateOpen:false, bridgeOpen:false, signalMet:false, signalAtBasin:false, phiRepaired:false, reversedSpanOrder:false, spanFirstPrime:null, introOrbitAngle:0, introLastAngle:null, bridgeStillSecret:false, sevenBloom:false });
     s.waves.length = 0; s.bursts.length = 0; s.known.length = 0; s.secrets.length = 0; s.visitedAreas = new Set(["FIRST CLEARING"]); s.pulseCount = new Map();
-    Object.assign(s.signal, { x:560, y:1000, targetX:560, targetY:1000, phase:0, pulseTimer:0.55, visible:true, broken:true, following:false, trust:0, name:"?" });
+    Object.assign(s.signal, { x:560, y:1000, targetX:560,targetY:1000, phase:0, pulseTimer:0.55, visible:true, broken:true, following:false, trust:0, name:"?" });
     s.basinNodes = [G.makeNode(2,1180,760), G.makeNode(3,1450,1120), G.makeNode(5,1690,650)];
     s.spanLocks = [G.makeNode(3,2220,700,"lock"), G.makeNode(5,2550,1240,"lock")];
     s.gardenAnchors = []; const cx = 3450, cy = 1000;
@@ -169,7 +169,7 @@
   };
 
   G.startGame = () => {
-    G.ensureAudio(); G.resetWorld(); G.running = true; G.el.startScreen.classList.remove("visible");
+    G.ensureAudio(); if (G.startMusic) G.startMusic(); G.resetWorld(); G.running = true; G.el.startScreen.classList.remove("visible");
     G.el.hud.classList.remove("storyHidden"); G.el.help.classList.remove("storyHidden"); G.el.quest.classList.remove("storyHidden"); G.lastTime = performance.now();
     G.showDiscovery("LISTEN", "five pulses. one missing.", "Something nearby is repeating a pattern badly. It grows clearer when you move toward it.", 4200);
   };
