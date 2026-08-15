@@ -6,45 +6,43 @@
   <title>PHASE</title>
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="tutorial.css" />
+  <link rel="stylesheet" href="adventure.css" />
 </head>
 <body>
   <canvas id="game"></canvas>
 
   <div id="hud">
     <div class="brand">PHASE</div>
-    <div class="subtitle">A universe made only from math</div>
-
-    <div class="stat-row">
-      <span>Integrity</span>
-      <div class="bar"><div id="hpBar"></div></div>
-      <span id="hpText">100</span>
-    </div>
-
+    <div class="subtitle">Mathematical Adventure</div>
     <div class="readout">
-      <div>Frequency <strong id="freqText">2</strong></div>
-      <div>Score <strong id="scoreText">0</strong></div>
-      <div>Level <strong id="levelText">1</strong></div>
-    </div>
-
-    <div id="bossReadout" class="hidden">
-      <div class="boss-title">PRIMORIAL ENTITY</div>
-      <div class="stat-row">
-        <span>Stability</span>
-        <div class="bar boss"><div id="bossBar"></div></div>
-        <span id="bossText">100%</span>
-      </div>
-      <div>Active cycle <strong id="bossPrime">3</strong></div>
+      <div>Lens <strong id="freqText">2</strong></div>
+      <div>Knowledge <strong id="scoreText">0</strong></div>
+      <div>Area <strong id="levelText">Coordinate Basin</strong></div>
     </div>
   </div>
 
   <div id="help">
     <div><strong>Move</strong> WASD or Arrow Keys</div>
-    <div><strong>Emit wave</strong> Space or Click</div>
-    <div><strong>Change frequency</strong> Q and E</div>
-    <div><strong>Damage</strong> Match frequency to target</div>
+    <div><strong>Pulse</strong> Space</div>
+    <div><strong>Tune lens</strong> Q and E</div>
+    <div><strong>Goal</strong> Observe, infer, interact</div>
   </div>
 
   <div id="message"></div>
+
+  <aside id="adventureTask">
+    <div id="adventureArea">COORDINATE BASIN</div>
+    <div id="adventureObjective">Awaken the resonator network</div>
+    <div id="adventureHint">Tune to each natural mode, then pulse it.</div>
+    <div id="adventureProgress">0 / 3 modes awake</div>
+  </aside>
+
+  <div id="adventureDiscovery">
+    <div class="discoveryEyebrow">DISCOVERY</div>
+    <div id="discoveryTitle"></div>
+    <div id="discoveryFormula"></div>
+    <div id="discoveryMeaning"></div>
+  </div>
 
   <div id="tutorial" aria-live="polite">
     <canvas id="tutorialWorld"></canvas>
@@ -72,34 +70,26 @@
       <div class="eyebrow">NO SPRITES · NO TEXTURES · NO PREMADE ANIMATION</div>
       <h1>PHASE</h1>
       <p>
-        Every object is an equation. Every movement is a function.
-        Every explosion is a system becoming unstable.
+        A world where mathematics is not flavor. It is the substance of the environment.
       </p>
       <p class="concept">
-        Discover the laws of the world by using them.
+        Discover laws by using them, then use those laws to change what the world allows.
       </p>
       <button id="startButton">ENTER THE FIELD</button>
     </div>
   </div>
 
-  <div id="upgradeScreen" class="panel">
-    <div class="panel-inner upgrade-panel">
-      <div class="eyebrow">MATHEMATICAL DISCOVERY</div>
-      <h2>Choose a new law</h2>
-      <div id="upgradeChoices"></div>
-    </div>
-  </div>
-
-  <div id="gameOver" class="panel">
-    <div class="panel-inner">
-      <div class="eyebrow">SYSTEM COLLAPSE</div>
-      <h2>Phase lost</h2>
-      <p id="finalScore"></p>
-      <button id="restartButton">REINITIALIZE</button>
+  <div id="adventureComplete" class="panel">
+    <div class="panel-inner completionPanel">
+      <div class="eyebrow">ADVENTURE PROTOTYPE COMPLETE</div>
+      <h2>Something followed you.</h2>
+      <p id="completeSummary"></p>
+      <div class="completionFormula">understanding → relationship</div>
+      <button id="replayButton">REENTER THE FIELD</button>
     </div>
   </div>
 
   <script src="tutorial.js"></script>
-  <script src="game_v2.js"></script>
+  <script src="adventure.js"></script>
 </body>
 </html>
