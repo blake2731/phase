@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>PHASE</title>
   <link rel="stylesheet" href="style.css" />
-  <link rel="stylesheet" href="story_world.css" />
+  <link rel="stylesheet" href="tutorial.css" />
 </head>
 <body>
   <canvas id="game"></canvas>
@@ -41,27 +41,30 @@
     <div><strong>Move</strong> WASD or Arrow Keys</div>
     <div><strong>Emit wave</strong> Space or Click</div>
     <div><strong>Change frequency</strong> Q and E</div>
-    <div><strong>Resonance</strong> Match an enemy prime</div>
+    <div><strong>Damage</strong> Match frequency to target</div>
   </div>
 
   <div id="message"></div>
 
-  <div id="prologue" data-stage="title" aria-live="polite">
-    <canvas id="storyWorld"></canvas>
-    <div id="prologueTrail"></div>
-    <div id="prologuePoint"></div>
+  <div id="tutorial" aria-live="polite">
+    <canvas id="tutorialWorld"></canvas>
 
-    <div id="storyMemory">
-      <div class="storyMemoryLabel">KNOWN</div>
+    <section class="tutorialCard">
+      <div id="lessonNumber"></div>
+      <h2 id="lessonTitle"></h2>
+      <div id="lessonFormula"></div>
+      <div id="lessonMeaning"></div>
+      <div class="lessonTry">
+        <div class="lessonTryLabel">TRY IT</div>
+        <div id="lessonObjective"></div>
+        <div id="lessonStatus" class="lessonStatus">TRY IT</div>
+      </div>
+    </section>
+
+    <div class="tutorialKnown">
+      <div class="tutorialKnownLabel">KNOWN</div>
+      <div id="knownList"></div>
     </div>
-
-    <div class="storyReadout">
-      <div id="prologueText"></div>
-      <div id="prologueFormula"></div>
-      <div id="prologueHint"></div>
-    </div>
-
-    <div id="storyChoice"></div>
   </div>
 
   <div id="startScreen" class="panel visible">
@@ -73,7 +76,7 @@
         Every explosion is a system becoming unstable.
       </p>
       <p class="concept">
-        Discover the laws of the world by interacting with them.
+        Discover the laws of the world by using them.
       </p>
       <button id="startButton">ENTER THE FIELD</button>
     </div>
@@ -96,7 +99,7 @@
     </div>
   </div>
 
-  <script src="story_world.js"></script>
-  <script src="game.js"></script>
+  <script src="tutorial.js"></script>
+  <script src="game_v2.js"></script>
 </body>
 </html>
