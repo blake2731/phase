@@ -1,0 +1,228 @@
+.adventureHud {
+  width: min(440px, calc(100vw - 44px)) !important;
+}
+
+.adventureStats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  margin-top: 12px;
+  font-size: 11px;
+  letter-spacing: 0.09em;
+  color: rgba(226, 239, 255, 0.65);
+}
+
+.adventureStats strong {
+  color: #fff;
+}
+
+#quest {
+  position: fixed;
+  left: 22px;
+  bottom: 22px;
+  z-index: 7;
+  width: min(390px, calc(100vw - 44px));
+  padding: 15px 17px;
+  border-left: 2px solid rgba(119, 220, 255, 0.42);
+  background: linear-gradient(90deg, rgba(5, 12, 24, 0.86), rgba(5, 12, 24, 0.25));
+  pointer-events: none;
+}
+
+.questKicker,
+.discoveryKicker {
+  margin-bottom: 5px;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  color: rgba(150, 220, 255, 0.55);
+}
+
+#questTitle {
+  font-size: 17px;
+  font-weight: 750;
+  letter-spacing: 0.02em;
+}
+
+#questHint {
+  margin-top: 6px;
+  font-size: 11px;
+  line-height: 1.5;
+  color: rgba(222, 235, 252, 0.58);
+}
+
+#questProgress {
+  margin-top: 9px;
+  font: 700 10px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  letter-spacing: 0.08em;
+  color: rgba(145, 231, 255, 0.8);
+}
+
+#discovery {
+  position: fixed;
+  left: 50%;
+  top: 11%;
+  z-index: 30;
+  width: min(570px, calc(100vw - 40px));
+  padding: 18px 22px;
+  transform: translate(-50%, -14px);
+  opacity: 0;
+  border: 1px solid rgba(150, 220, 255, 0.14);
+  border-radius: 14px;
+  background: rgba(4, 9, 18, 0.91);
+  box-shadow: 0 22px 70px rgba(0, 0, 0, 0.38);
+  text-align: center;
+  pointer-events: none;
+  transition: opacity 240ms ease, transform 240ms ease;
+}
+
+#discovery.visible {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+#discovery.observation {
+  border-color: rgba(221, 184, 255, 0.24);
+}
+
+#discovery.observation .discoveryKicker {
+  color: rgba(221, 184, 255, 0.72);
+}
+
+#discoveryTitle {
+  font-size: 18px;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+}
+
+#discoveryFormula {
+  margin-top: 8px;
+  font: 650 14px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  color: #bceeff;
+}
+
+#discoveryMeaning {
+  margin-top: 8px;
+  font-size: 12px;
+  line-height: 1.55;
+  color: rgba(226, 238, 255, 0.65);
+}
+
+#journal {
+  position: fixed;
+  inset: 7vh 8vw;
+  z-index: 45;
+  display: none;
+  padding: 28px;
+  overflow: auto;
+  border: 1px solid rgba(179, 221, 255, 0.18);
+  border-radius: 18px;
+  background: rgba(3, 8, 17, 0.97);
+  box-shadow: 0 40px 140px rgba(0, 0, 0, 0.62);
+}
+
+#journal.visible {
+  display: block;
+}
+
+.journalHeader {
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+  align-items: start;
+  padding-bottom: 18px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.journalHeader h2 {
+  margin-bottom: 0;
+}
+
+.journalHeader button {
+  margin: 0;
+}
+
+.journalColumns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+  margin-top: 22px;
+}
+
+.journalColumns h3 {
+  margin: 0 0 12px;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: rgba(189, 225, 255, 0.55);
+}
+
+.journalList {
+  display: grid;
+  gap: 9px;
+}
+
+.journalEntry {
+  padding: 12px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.journalEntry strong {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 12px;
+}
+
+.journalEntry span {
+  font-size: 10px;
+  line-height: 1.45;
+  color: rgba(225, 236, 252, 0.55);
+}
+
+.hookLine {
+  margin-top: 24px !important;
+  color: rgba(239, 247, 255, 0.88) !important;
+  font-size: 15px;
+}
+
+.adventureStart .concept {
+  font-size: 12px;
+}
+
+.completeStats {
+  margin: 18px auto;
+  font: 700 11px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  color: rgba(185, 229, 255, 0.72);
+}
+
+.secondaryButton {
+  margin-left: 8px;
+  opacity: 0.72;
+}
+
+.storyHidden {
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+@media (max-width: 700px) {
+  #quest {
+    bottom: 12px;
+    left: 12px;
+    width: calc(100vw - 24px);
+  }
+
+  #journal {
+    inset: 3vh 3vw;
+    padding: 18px;
+  }
+
+  .journalColumns {
+    grid-template-columns: 1fr;
+  }
+
+  .journalHeader {
+    gap: 12px;
+  }
+}
