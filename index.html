@@ -3,93 +3,91 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PHASE</title>
+  <title>PHASE: First Signal</title>
   <link rel="stylesheet" href="style.css" />
-  <link rel="stylesheet" href="tutorial.css" />
-  <link rel="stylesheet" href="adventure.css" />
+  <link rel="stylesheet" href="adventure_v2.css" />
 </head>
 <body>
   <canvas id="game"></canvas>
 
-  <div id="hud">
+  <div id="hud" class="adventureHud storyHidden">
     <div class="brand">PHASE</div>
-    <div class="subtitle">Mathematical Adventure</div>
-    <div class="readout">
-      <div>Lens <strong id="freqText">2</strong></div>
-      <div>Knowledge <strong id="scoreText">0</strong></div>
-      <div>Area <strong id="levelText">Coordinate Basin</strong></div>
+    <div id="areaName" class="subtitle">UNKNOWN</div>
+    <div class="adventureStats">
+      <span>MODE <strong id="freqText">2</strong></span>
+      <span>INSIGHT <strong id="insightText">0</strong></span>
+      <span id="signalStatus">SIGNAL • ?</span>
     </div>
   </div>
 
-  <div id="help">
-    <div><strong>Move</strong> WASD or Arrow Keys</div>
-    <div><strong>Pulse</strong> Space</div>
-    <div><strong>Tune lens</strong> Q and E</div>
-    <div><strong>Goal</strong> Observe, infer, interact</div>
+  <div id="quest" class="storyHidden">
+    <div class="questKicker">CURRENT THREAD</div>
+    <div id="questTitle">Listen.</div>
+    <div id="questHint"></div>
+    <div id="questProgress"></div>
+  </div>
+
+  <div id="help" class="storyHidden">
+    <div><strong>Move</strong> WASD / Arrows</div>
+    <div><strong>Pulse</strong> Space / Click</div>
+    <div><strong>Tune</strong> Q / E</div>
+    <div><strong>Journal</strong> J</div>
   </div>
 
   <div id="message"></div>
 
-  <aside id="adventureTask">
-    <div id="adventureArea">COORDINATE BASIN</div>
-    <div id="adventureObjective">Awaken the resonator network</div>
-    <div id="adventureHint">Tune to each natural mode, then pulse it.</div>
-    <div id="adventureProgress">0 / 3 modes awake</div>
-  </aside>
-
-  <div id="adventureDiscovery">
-    <div class="discoveryEyebrow">DISCOVERY</div>
+  <div id="discovery" aria-live="polite">
+    <div class="discoveryKicker" id="discoveryKicker">DISCOVERY</div>
     <div id="discoveryTitle"></div>
     <div id="discoveryFormula"></div>
     <div id="discoveryMeaning"></div>
   </div>
 
-  <div id="tutorial" aria-live="polite">
-    <canvas id="tutorialWorld"></canvas>
-
-    <section class="tutorialCard">
-      <div id="lessonNumber"></div>
-      <h2 id="lessonTitle"></h2>
-      <div id="lessonFormula"></div>
-      <div id="lessonMeaning"></div>
-      <div class="lessonTry">
-        <div class="lessonTryLabel">TRY IT</div>
-        <div id="lessonObjective"></div>
-        <div id="lessonStatus" class="lessonStatus">TRY IT</div>
+  <div id="journal">
+    <div class="journalHeader">
+      <div>
+        <div class="eyebrow">FIELD JOURNAL</div>
+        <h2>What the world has taught you</h2>
       </div>
-    </section>
-
-    <div class="tutorialKnown">
-      <div class="tutorialKnownLabel">KNOWN</div>
-      <div id="knownList"></div>
+      <button id="closeJournal">CLOSE J</button>
+    </div>
+    <div class="journalColumns">
+      <section>
+        <h3>Known</h3>
+        <div id="knownList" class="journalList"></div>
+      </section>
+      <section>
+        <h3>Observations</h3>
+        <div id="secretList" class="journalList"></div>
+      </section>
     </div>
   </div>
 
-  <div id="startScreen" class="panel visible">
+  <div id="startScreen" class="panel visible adventureStart">
     <div class="panel-inner">
-      <div class="eyebrow">NO SPRITES · NO TEXTURES · NO PREMADE ANIMATION</div>
+      <div class="eyebrow">PHASE • FIRST SIGNAL</div>
       <h1>PHASE</h1>
-      <p>
-        A world where mathematics is not flavor. It is the substance of the environment.
-      </p>
-      <p class="concept">
-        Discover laws by using them, then use those laws to change what the world allows.
-      </p>
-      <button id="startButton">ENTER THE FIELD</button>
+      <p class="hookLine">Something found you before you knew how to look for it.</p>
+      <p class="concept">No quest marker knows what it wants. Neither do you.</p>
+      <button id="startButton">ANSWER</button>
     </div>
   </div>
 
-  <div id="adventureComplete" class="panel">
-    <div class="panel-inner completionPanel">
-      <div class="eyebrow">ADVENTURE PROTOTYPE COMPLETE</div>
-      <h2>Something followed you.</h2>
+  <div id="completePanel" class="panel">
+    <div class="panel-inner">
+      <div class="eyebrow">FIRST SIGNAL • COMPLETE</div>
+      <h2>It came with you.</h2>
       <p id="completeSummary"></p>
-      <div class="completionFormula">understanding → relationship</div>
-      <button id="replayButton">REENTER THE FIELD</button>
+      <div id="completeStats" class="completeStats"></div>
+      <button id="continueButton">KEEP EXPLORING</button>
+      <button id="replayButton" class="secondaryButton">REPLAY DEMO</button>
     </div>
   </div>
 
-  <script src="tutorial.js"></script>
-  <script src="adventure.js"></script>
+  <script src="adv2_core.js"></script>
+  <script src="adv2_gameplay.js"></script>
+  <script src="adv2_render_world.js"></script>
+  <script src="adv2_render_entities.js"></script>
+  <script src="adv2_main.js"></script>
 </body>
 </html>
