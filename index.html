@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PHASE</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <canvas id="game"></canvas>
+
+  <div id="hud">
+    <div class="brand">PHASE</div>
+    <div class="subtitle">A universe made only from math</div>
+
+    <div class="stat-row">
+      <span>Integrity</span>
+      <div class="bar"><div id="hpBar"></div></div>
+      <span id="hpText">100</span>
+    </div>
+
+    <div class="readout">
+      <div>Frequency <strong id="freqText">2</strong></div>
+      <div>Score <strong id="scoreText">0</strong></div>
+      <div>Level <strong id="levelText">1</strong></div>
+    </div>
+
+    <div id="bossReadout" class="hidden">
+      <div class="boss-title">PRIMORIAL ENTITY</div>
+      <div class="stat-row">
+        <span>Stability</span>
+        <div class="bar boss"><div id="bossBar"></div></div>
+        <span id="bossText">100%</span>
+      </div>
+      <div>Active cycle <strong id="bossPrime">3</strong></div>
+    </div>
+  </div>
+
+  <div id="help">
+    <div><strong>Move</strong> WASD or Arrow Keys</div>
+    <div><strong>Emit wave</strong> Space or Click</div>
+    <div><strong>Change frequency</strong> Q and E</div>
+    <div><strong>Resonance</strong> Match an enemy prime</div>
+  </div>
+
+  <div id="message"></div>
+
+  <div id="startScreen" class="panel visible">
+    <div class="panel-inner">
+      <div class="eyebrow">NO SPRITES · NO TEXTURES · NO PREMADE ANIMATION</div>
+      <h1>PHASE</h1>
+      <p>
+        Every object is an equation. Every movement is a function.
+        Every explosion is a system becoming unstable.
+      </p>
+      <p class="concept">
+        Match your emitted frequency to an enemy's rotational prime to trigger resonance.
+      </p>
+      <button id="startButton">ENTER THE FIELD</button>
+    </div>
+  </div>
+
+  <div id="upgradeScreen" class="panel">
+    <div class="panel-inner upgrade-panel">
+      <div class="eyebrow">MATHEMATICAL DISCOVERY</div>
+      <h2>Choose a new law</h2>
+      <div id="upgradeChoices"></div>
+    </div>
+  </div>
+
+  <div id="gameOver" class="panel">
+    <div class="panel-inner">
+      <div class="eyebrow">SYSTEM COLLAPSE</div>
+      <h2>Phase lost</h2>
+      <p id="finalScore"></p>
+      <button id="restartButton">REINITIALIZE</button>
+    </div>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>
