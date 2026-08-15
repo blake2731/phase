@@ -1,0 +1,274 @@
+#prologue {
+  position: fixed;
+  inset: 0;
+  z-index: 15;
+  display: none;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(30, 62, 95, 0.08), transparent 46%),
+    #02040a;
+  transition: opacity 1.6s ease, background 1.2s ease;
+}
+
+#prologue.visible {
+  display: block;
+}
+
+#prologue.departing {
+  opacity: 0;
+  pointer-events: none;
+}
+
+#storyWorld,
+#prologueTrail {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+#storyWorld {
+  z-index: 1;
+}
+
+#prologueTrail {
+  z-index: 2;
+  pointer-events: none;
+}
+
+#prologueTrail span {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: #a6efff;
+  box-shadow: 0 0 7px rgba(116, 226, 255, 0.55);
+}
+
+#prologuePoint {
+  position: absolute;
+  z-index: 4;
+  width: 10px;
+  height: 10px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: #e8fbff;
+  box-shadow:
+    0 0 8px rgba(180, 244, 255, 0.95),
+    0 0 25px rgba(90, 221, 255, 0.58),
+    0 0 70px rgba(90, 190, 255, 0.2);
+  transition: box-shadow 700ms ease, background 700ms ease;
+}
+
+#prologue[data-stage="velocity"] #prologuePoint,
+#prologue[data-stage="distance"] #prologuePoint,
+#prologue[data-stage="field"] #prologuePoint {
+  box-shadow:
+    0 0 9px rgba(195, 247, 255, 1),
+    0 0 32px rgba(72, 218, 255, 0.72),
+    0 0 90px rgba(80, 186, 255, 0.26);
+}
+
+#prologue[data-stage="other"] {
+  background:
+    radial-gradient(circle at 79% 34%, rgba(115, 64, 160, 0.12), transparent 30%),
+    radial-gradient(circle at 50% 50%, rgba(25, 78, 106, 0.1), transparent 48%),
+    #02040a;
+}
+
+#prologue[data-stage="oscillation"],
+#prologue[data-stage="strategy"] {
+  background:
+    radial-gradient(circle at 79% 34%, rgba(133, 73, 177, 0.15), transparent 32%),
+    radial-gradient(circle at 50% 50%, rgba(42, 114, 138, 0.12), transparent 52%),
+    #02040a;
+}
+
+#prologue[data-stage="interference"] {
+  background:
+    radial-gradient(circle at 68% 39%, rgba(131, 77, 169, 0.18), transparent 37%),
+    radial-gradient(circle at 46% 55%, rgba(47, 137, 154, 0.16), transparent 52%),
+    #02040a;
+}
+
+#prologue[data-stage="complete"] {
+  background:
+    radial-gradient(circle at 50% 50%, rgba(59, 143, 170, 0.18), transparent 55%),
+    #030713;
+}
+
+.storyReadout {
+  position: absolute;
+  z-index: 6;
+  left: 50%;
+  top: 13%;
+  width: min(780px, calc(100vw - 50px));
+  transform: translateX(-50%);
+  text-align: center;
+  pointer-events: none;
+}
+
+#prologueText {
+  min-height: 24px;
+  color: rgba(231, 248, 255, 0.96);
+  font-size: clamp(13px, 1.45vw, 18px);
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-shadow: 0 0 20px rgba(120, 225, 255, 0.28);
+}
+
+#prologueFormula {
+  min-height: 44px;
+  margin-top: 12px;
+  color: rgba(155, 229, 255, 0.86);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: clamp(19px, 2.5vw, 32px);
+  letter-spacing: 0.04em;
+}
+
+#prologueHint {
+  max-width: 640px;
+  min-height: 36px;
+  margin: 13px auto 0;
+  color: rgba(216, 231, 244, 0.5);
+  font-size: clamp(11px, 1.1vw, 14px);
+  line-height: 1.55;
+  letter-spacing: 0.045em;
+}
+
+.storyPulse {
+  animation: storyPulse 750ms cubic-bezier(.2,.8,.2,1);
+}
+
+@keyframes storyPulse {
+  0% {
+    opacity: 0;
+    transform: translateY(8px) scale(0.985);
+    filter: blur(4px);
+  }
+  55% {
+    opacity: 1;
+    filter: blur(0);
+  }
+  100% {
+    transform: translateY(0) scale(1);
+  }
+}
+
+#storyMemory {
+  position: absolute;
+  z-index: 7;
+  left: 22px;
+  bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  pointer-events: none;
+  color: rgba(210, 231, 245, 0.4);
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.storyMemoryLabel {
+  margin-bottom: 4px;
+  color: rgba(210, 231, 245, 0.24);
+  font-size: 8px;
+}
+
+.storyMemoryItem {
+  opacity: 0;
+  transform: translateX(-5px);
+  transition: opacity 450ms ease, transform 450ms ease, color 450ms ease;
+}
+
+.storyMemoryItem.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+#prologue[data-stage="complete"] .storyMemoryItem {
+  color: rgba(182, 235, 250, 0.58);
+}
+
+#storyChoice {
+  position: absolute;
+  z-index: 8;
+  left: 50%;
+  bottom: 12%;
+  width: min(520px, calc(100vw - 44px));
+  transform: translate(-50%, 12px);
+  opacity: 0;
+  padding: 14px 18px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  text-align: center;
+  pointer-events: none;
+  transition: opacity 650ms ease, transform 650ms ease, border-color 650ms ease;
+}
+
+#storyChoice.visible {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+#storyChoice strong,
+#storyChoice span {
+  display: block;
+}
+
+#storyChoice strong {
+  margin-bottom: 6px;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+}
+
+#storyChoice span {
+  color: rgba(230, 240, 248, 0.58);
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+#storyChoice.cooperate {
+  border-color: rgba(183, 117, 236, 0.23);
+}
+
+#storyChoice.cooperate strong {
+  color: rgba(214, 170, 255, 0.9);
+}
+
+#storyChoice.oppose {
+  border-color: rgba(255, 120, 83, 0.26);
+}
+
+#storyChoice.oppose strong {
+  color: rgba(255, 150, 112, 0.92);
+}
+
+.storyHidden {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+#hud,
+#help {
+  transition: opacity 900ms ease, visibility 900ms ease;
+}
+
+@media (max-width: 700px) {
+  .storyReadout {
+    top: 10%;
+  }
+
+  #storyMemory {
+    left: 14px;
+    bottom: 14px;
+  }
+
+  #storyChoice {
+    bottom: 9%;
+  }
+}
