@@ -128,7 +128,22 @@
   };
 
   G.updateCollectibles = () => {
-    s.collectibles.forEach(item=>{if(item.collected)return;if(item.frequency!==null&&G.PRIMES[p.freqIndex]!==item.frequency)return;if(Math.hypot(p.x-item.x,p.y-item.y)>30)return;item.collected=true;s.insight+=1;G.addSecret("FOUND • "+item.formula,item.formula,item.note,0);G.updateHud();});
+    s.collectibles.forEach(item => {
+      if (item.collected) return;
+      if (item.frequency !== null && G.PRIMES[p.freqIndex] !== item.frequency) return;
+      const playerTouch = Math.hypot(p.x-item.x,p.y-item.y) <= 34;
+      const phiTouch = s.phiRepaired && s.signal.following && Math.hypot(s.signal.x-item.x,s.signal.y-item.y) <= 72;
+      if (!playerTouch && !phiTouch) return;
+      item.collected = true;
+      s.insight += 1;
+      if (phiTouch && !playerTouch) {
+        s.bursts.push({x:item.x,y:item.y,prime:5,age:0,duration:1.3,kind:"friend"});
+        G.showMessage("PHI REACHED WHAT YOU COULD NOT",1100);
+        G.chord(146.83,[1,5/4,3/2]);
+      }
+      G.addSecret("FOUND • "+item.formula,item.formula,item.note,0);
+      G.updateHud();
+    });
   };
 
   G.updateSecrets = () => {
