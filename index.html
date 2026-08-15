@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>PHASE</title>
   <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="story_world.css" />
 </head>
 <body>
   <canvas id="game"></canvas>
@@ -45,14 +46,22 @@
 
   <div id="message"></div>
 
-  <div id="prologue" aria-live="polite">
+  <div id="prologue" data-stage="title" aria-live="polite">
+    <canvas id="storyWorld"></canvas>
     <div id="prologueTrail"></div>
     <div id="prologuePoint"></div>
+
+    <div id="storyMemory">
+      <div class="storyMemoryLabel">KNOWN</div>
+    </div>
+
     <div class="storyReadout">
       <div id="prologueText"></div>
       <div id="prologueFormula"></div>
       <div id="prologueHint"></div>
     </div>
+
+    <div id="storyChoice"></div>
   </div>
 
   <div id="startScreen" class="panel visible">
@@ -64,7 +73,7 @@
         Every explosion is a system becoming unstable.
       </p>
       <p class="concept">
-        Match your emitted frequency to an enemy's rotational prime to trigger resonance.
+        Discover the laws of the world by interacting with them.
       </p>
       <button id="startButton">ENTER THE FIELD</button>
     </div>
@@ -87,7 +96,7 @@
     </div>
   </div>
 
-  <script src="story.js"></script>
+  <script src="story_world.js"></script>
   <script src="game.js"></script>
 </body>
 </html>
