@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="adventure_v7.css" />
   <link rel="stylesheet" href="adventure_v7_hotfix.css" />
   <link rel="stylesheet" href="adventure_v9.css" />
+  <link rel="stylesheet" href="adventure_v10.css" />
 </head>
 <body>
   <canvas id="game"></canvas>
@@ -43,6 +44,16 @@
       <div id="openingFormula"></div>
       <div id="openingPrompt">This is home.</div>
       <div id="openingReady"></div>
+    </div>
+  </div>
+
+  <div id="storyMoment" aria-live="assertive">
+    <div class="storyMomentInner">
+      <div id="storyMomentKicker"></div>
+      <div id="storyMomentTitle"></div>
+      <div id="storyMomentBody"></div>
+      <div id="storyMomentMark"></div>
+      <button id="storyMomentButton">CONTINUE</button>
     </div>
   </div>
 
@@ -81,30 +92,12 @@
     </div>
 
     <div class="journalColumns journalGrid">
-      <section>
-        <h3>Abilities</h3>
-        <div id="abilityList" class="journalList"></div>
-      </section>
-      <section>
-        <h3>Key Items</h3>
-        <div id="keyItemList" class="journalList"></div>
-      </section>
-      <section>
-        <h3>Laws</h3>
-        <div id="knownList" class="journalList"></div>
-      </section>
-      <section>
-        <h3>Observations</h3>
-        <div id="secretList" class="journalList"></div>
-      </section>
-      <section>
-        <h3>Bonds</h3>
-        <div id="bondList" class="journalList"></div>
-      </section>
-      <section>
-        <h3>Anomalies</h3>
-        <div id="anomalyList" class="journalList"></div>
-      </section>
+      <section><h3>Abilities</h3><div id="abilityList" class="journalList"></div></section>
+      <section><h3>Key Items</h3><div id="keyItemList" class="journalList"></div></section>
+      <section><h3>Laws</h3><div id="knownList" class="journalList"></div></section>
+      <section><h3>Observations</h3><div id="secretList" class="journalList"></div></section>
+      <section><h3>Bonds</h3><div id="bondList" class="journalList"></div></section>
+      <section><h3>Anomalies</h3><div id="anomalyList" class="journalList"></div></section>
     </div>
   </div>
 
@@ -168,6 +161,9 @@
   <script src="adv9_world_overlay.js"></script>
   <script src="adv9_journal.js"></script>
   <script src="adv9_language.js"></script>
+  <script src="adv10_input.js"></script>
+  <script src="adv10_world.js"></script>
+  <script src="adv10_story.js"></script>
   <script src="adv2_main.js"></script>
 </body>
 </html>
