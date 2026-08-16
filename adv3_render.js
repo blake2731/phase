@@ -12,6 +12,31 @@
     drawThreshold();
   };
 
+  const baseDraw = G.draw;
+  G.draw = () => {
+    baseDraw();
+    drawOpeningPerception();
+  };
+
+  function drawOpeningPerception() {
+    if (!G.intro?.active) return;
+    const phase = G.intro.phase;
+    const px = p.x - G.camera.x;
+    const py = p.y - G.camera.y;
+    const radius = phase === "orient" ? 250 : phase === "motion" ? 390 : phase === "ready" ? 560 : 760;
+    const outer = Math.max(G.screenW, G.screenH) * 0.92;
+
+    ctx.save();
+    ctx.setTransform(G.dpr, 0, 0, G.dpr, 0, 0);
+    const fog = ctx.createRadialGradient(px, py, radius * 0.38, px, py, Math.max(radius, outer));
+    fog.addColorStop(0, "rgba(2, 6, 12, 0.00)");
+    fog.addColorStop(Math.min(0.72, radius / Math.max(radius, outer)), "rgba(2, 6, 12, 0.08)");
+    fog.addColorStop(1, phase === "reveal" ? "rgba(2, 6, 12, 0.42)" : "rgba(2, 6, 12, 0.92)");
+    ctx.fillStyle = fog;
+    ctx.fillRect(0, 0, G.screenW, G.screenH);
+    ctx.restore();
+  }
+
   function drawThreshold() {
     if (!s.thresholdStarted && p.x < 3920) return;
 
