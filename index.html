@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="adventure_v2.css" />
   <link rel="stylesheet" href="adventure_v3.css" />
+  <link rel="stylesheet" href="adventure_v4.css" />
 </head>
 <body>
   <canvas id="game"></canvas>
@@ -39,11 +40,19 @@
 
   <div id="openingSequence" aria-live="polite">
     <div class="openingCard">
-      <div id="openingKicker">FIRST OBSERVATION</div>
-      <div id="openingTitle">YOU ARE HERE</div>
-      <div id="openingFormula">P = (x, y)</div>
-      <div id="openingPrompt">Move when you are ready.</div>
+      <div id="openingKicker">A SMALL BEGINNING</div>
+      <div id="openingTitle">THIS IS P.</div>
+      <div id="openingFormula">P</div>
+      <div id="openingPrompt">P does not remember being made. P remembers one place.</div>
       <div id="openingReady"></div>
+    </div>
+  </div>
+
+  <div id="chapterCard" aria-live="polite">
+    <div class="chapterInner">
+      <div id="chapterKicker">CHAPTER I</div>
+      <div id="chapterTitle">FIRST SIGNAL</div>
+      <div id="chapterSubtitle">Find the missing note.</div>
     </div>
   </div>
 
@@ -95,11 +104,11 @@
 
   <div id="startScreen" class="panel visible adventureStart">
     <div class="panel-inner">
-      <div class="eyebrow">PHASE • FIRST SIGNAL</div>
+      <div class="eyebrow">PHASE • CHAPTER I</div>
       <h1>PHASE</h1>
-      <p class="hookLine">Something found you before you knew how to look for it.</p>
-      <p class="concept">A journey through a world whose rules are real before they are understood.</p>
-      <button id="startButton">ANSWER</button>
+      <p class="hookLine">Every journey begins somewhere.</p>
+      <p class="concept">For P, that place is Origin.</p>
+      <button id="startButton">WAKE</button>
     </div>
   </div>
 
@@ -121,7 +130,8 @@
   <script src="adv2_render_entities.js"></script>
   <script src="adv3_progression.js"></script>
   <script src="adv3_render.js"></script>
-  <script src="adv3_intro.js"></script>
+  <script src="adv4_render.js"></script>
+  <script src="adv4_intro.js"></script>
   <script src="adv2_main.js"></script>
 </body>
 </html>
