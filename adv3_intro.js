@@ -123,6 +123,7 @@
     G.intro.active = false;
     G.intro.phase = "complete";
     s.stage = "signal";
+    s.area = "FIRST CLEARING";
     if (G.applyBonuses) G.applyBonuses();
     else p.speed = 292;
 
@@ -136,7 +137,6 @@
     G.showMessage("FIELD JOURNAL AVAILABLE • J", 1250);
   }
 
-  const baseStartGame = G.startGame;
   G.startGame = () => beginOpening();
 
   const baseEmitWave = G.emitWave;
@@ -163,6 +163,18 @@
     baseToggleJournal(force);
   };
 
+  const baseUpdateCollectibles = G.updateCollectibles;
+  G.updateCollectibles = () => {
+    if (G.intro.active) return;
+    baseUpdateCollectibles();
+  };
+
+  const baseUpdateSecrets = G.updateSecrets;
+  G.updateSecrets = () => {
+    if (G.intro.active) return;
+    baseUpdateSecrets();
+  };
+
   const baseUpdate = G.update;
   G.update = dt => {
     baseUpdate(dt);
@@ -183,6 +195,7 @@
         p.vx = Math.min(0, p.vx);
       }
       p.y = G.clamp(p.y, 260, 1740);
+      s.area = "FIRST CLEARING";
     }
 
     if (intro.phase === "orient" && intro.elapsed >= 2 && intro.distance >= 90) {
