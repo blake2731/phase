@@ -1,0 +1,130 @@
+(() => {
+  "use strict";
+  const G = window.PHASEV2;
+  if (!G) return;
+  const s = G.state;
+  const ui = {
+    wrap: document.getElementById("storyMoment"),
+    kicker: document.getElementById("storyMomentKicker"),
+    title: document.getElementById("storyMomentTitle"),
+    body: document.getElementById("storyMomentBody"),
+    mark: document.getElementById("storyMomentMark"),
+    button: document.getElementById("storyMomentButton")
+  };
+  if (!ui.wrap) return;
+
+  const queue = [];
+  let active = false;
+  let unlockAt = 0;
+
+  function releaseInput() {
+    if (G.releaseMovement) G.releaseMovement();
+    else {
+      G.keys?.clear?.();
+      G.player.vx = 0;
+      G.player.vy = 0;
+    }
+  }
+
+  function openNext() {
+    if (active || !queue.length) return;
+    const item = queue.shift();
+    active = true;
+    unlockAt = performance.now() + (item.minMs || 1250);
+    releaseInput();
+    ui.wrap.dataset.kind = item.kind || "story";
+    ui.kicker.textContent = item.kicker || "";
+    ui.title.textContent = item.title || "";
+    ui.body.textContent = item.body || "";
+    ui.mark.textContent = item.mark || "";
+    ui.button.textContent = item.button || "CONTINUE";
+    ui.button.disabled = true;
+    ui.wrap.classList.add("visible");
+    window.setTimeout(() => {
+      if (active) ui.button.disabled = false;
+    }, item.minMs || 1250);
+    if (item.chord) G.chord?.(item.root || 110, item.chord);
+  }
+
+  function show(item) {
+    queue.push(item);
+    openNext();
+  }
+
+  function close() {
+    if (!active || performance.now() < unlockAt) return;
+    active = false;
+    ui.wrap.classList.remove("visible");
+    releaseInput();
+    G.lastTime = performance.now();
+    window.setTimeout(openNext, 140);
+  }
+
+  ui.button.addEventListener("click", close);
+  ui.wrap.addEventListener("mousedown", event => {
+    if (event.target === ui.wrap) close();
+  });
+  window.addEventListener("keydown", event => {
+    if (!active) return;
+    if (["Space", "Enter"].includes(event.code)) {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      close();
+    }
+  }, true);
+
+  G.showStoryMoment = show;
+  G.storyMomentActive = () => active;
+
+  const baseStart = G.startGame;
+  G.startGame = () => {
+    baseStart();
+    show({
+      kind:"origin",
+      kicker:"CHAPTER I",
+      title:"ORIGIN",
+      body:"P wakes at the only place it remembers.",
+      mark:"HOME",
+      minMs:1700,
+      chord:[1, 5/4, 3/2, 15/8]
+    });
+  };
+
+  const baseUpdate = G.update;
+  G.update = dt => {
+    if (active) {
+      releaseInput();
+      return;
+    }
+
+    const phaseBefore = G.intro?.phase;
+    const farBefore = Boolean(s.v10?.farFieldStarted);
+    baseUpdate(dt);
+    const phaseAfter = G.intro?.phase;
+    const farAfter = Boolean(s.v10?.farFieldStarted);
+
+    if (phaseBefore !== "break" && phaseAfter === "break") {
+      show({
+        kind:"break",
+        kicker:"THE OLD SONG STOPS",
+        title:"ORIGIN BREAKS",
+        body:"Three notes are torn from home.",
+        mark:"3 MISSING",
+        minMs:1500,
+        chord:[1, 6/5, 7/5]
+      });
+    }
+
+    if (!farBefore && farAfter) {
+      show({
+        kind:"reach",
+        kicker:"BEYOND THE RELAY",
+        title:"ECHO REACH",
+        body:"The signal continues farther east.",
+        mark:"SOURCE UNKNOWN",
+        minMs:1450,
+        chord:[1, 9/8, 3/2, 15/8]
+      });
+    }
+  };
+})();
