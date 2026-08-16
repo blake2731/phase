@@ -8,23 +8,137 @@
   <link rel="stylesheet" href="adventure_v2.css" />
   <link rel="stylesheet" href="adventure_v3.css" />
   <link rel="stylesheet" href="adventure_v4.css" />
+  <link rel="stylesheet" href="adventure_v7.css" />
 </head>
 <body>
   <canvas id="game"></canvas>
-  <div id="hud" class="adventureHud storyHidden"><div class="brand">PHASE</div><div id="areaName" class="subtitle">UNKNOWN</div><div class="adventureStats"><span>MODE <strong id="freqText">2</strong></span><span>INSIGHT <strong id="insightText">0</strong></span><span id="signalStatus">SIGNAL • ?</span></div></div>
-  <div id="quest" class="storyHidden"><div class="questKicker">CURRENT THREAD</div><div id="questTitle">Listen.</div><div id="questHint"></div><div id="questProgress"></div></div>
-  <div id="help" class="storyHidden"><div><strong>Move</strong> WASD / Arrows</div><div><strong>Pulse</strong> Space / Click</div><div><strong>Tune</strong> Q / E</div><div><strong>Journal</strong> J</div></div>
-  <div id="message"></div>
-  <div id="openingSequence" aria-live="polite"><div class="openingCard"><div id="openingKicker"></div><div id="openingTitle">THIS IS P.</div><div id="openingFormula"></div><div id="openingPrompt">This is home.</div><div id="openingReady"></div></div></div>
-  <div id="chapterCard" aria-live="polite"><div class="chapterInner"><div id="chapterKicker">CHAPTER I</div><div id="chapterTitle">THE LOST NOTES</div><div id="chapterSubtitle">Bring them home.</div></div></div>
-  <div id="discovery" aria-live="polite"><div class="discoveryKicker" id="discoveryKicker">DISCOVERY</div><div id="discoveryTitle"></div><div id="discoveryFormula"></div><div id="discoveryMeaning"></div></div>
-  <div id="journal">
-    <div class="journalHeader"><div><div class="eyebrow">FIELD JOURNAL</div><h2>What the world has taught you</h2></div><button id="closeJournal">CLOSE J</button></div>
-    <div class="journalProgressBlock"><div class="journalProgressHeader"><span>MODEL COHERENCE</span><strong id="journalProgressText">0%</strong></div><div class="journalProgressTrack"><div id="journalProgressFill"></div></div><div id="journeyNodes"></div><div id="journalBonuses"></div></div>
-    <div class="journalColumns journalGrid"><section><h3>Laws</h3><div id="knownList" class="journalList"></div></section><section><h3>Observations</h3><div id="secretList" class="journalList"></div></section><section><h3>Bonds</h3><div id="bondList" class="journalList"></div></section><section><h3>Anomalies</h3><div id="anomalyList" class="journalList"></div></section></div>
+
+  <div id="hud" class="adventureHud storyHidden">
+    <div class="brand">PHASE</div>
+    <div id="areaName" class="subtitle">UNKNOWN</div>
+    <div class="adventureStats">
+      <span>MODE <strong id="freqText">—</strong></span>
+      <span>INSIGHT <strong id="insightText">0</strong></span>
+      <span id="signalStatus">SIGNAL • ?</span>
+    </div>
+    <div id="modeShelf"><span class="modeLocked">PULSE UNKNOWN</span></div>
   </div>
-  <div id="startScreen" class="panel visible adventureStart"><div class="panel-inner"><div class="eyebrow">PHASE • CHAPTER I</div><h1>PHASE</h1><p class="hookLine">Every journey begins somewhere.</p><p class="concept">For P, that place is Origin.</p><button id="startButton">WAKE</button></div></div>
-  <div id="completePanel" class="panel"><div class="panel-inner"><div class="eyebrow">FIRST SIGNAL • COMPLETE</div><h2 id="completeTitle">It came with you.</h2><p id="completeSummary"></p><div id="completeStats" class="completeStats"></div><button id="continueButton">KEEP EXPLORING</button><button id="replayButton" class="secondaryButton">REPLAY DEMO</button></div></div>
+
+  <div id="quest" class="storyHidden">
+    <div class="questKicker">CURRENT THREAD</div>
+    <div id="questTitle">Listen.</div>
+    <div id="questHint"></div>
+    <div id="questProgress"></div>
+  </div>
+
+  <div id="help" class="storyHidden"><div><strong>Move</strong> WASD / Arrows</div></div>
+  <div id="message"></div>
+
+  <div id="openingSequence" aria-live="polite">
+    <div class="openingCard">
+      <div id="openingKicker"></div>
+      <div id="openingTitle">THIS IS P.</div>
+      <div id="openingFormula"></div>
+      <div id="openingPrompt">This is home.</div>
+      <div id="openingReady"></div>
+    </div>
+  </div>
+
+  <div id="chapterCard" aria-live="polite">
+    <div class="chapterInner">
+      <div id="chapterKicker">CHAPTER I</div>
+      <div id="chapterTitle">THE LOST NOTES</div>
+      <div id="chapterSubtitle">Bring them home.</div>
+    </div>
+  </div>
+
+  <div id="discovery" aria-live="polite">
+    <div class="discoveryKicker" id="discoveryKicker">DISCOVERY</div>
+    <div id="discoveryTitle"></div>
+    <div id="discoveryFormula"></div>
+    <div id="discoveryMeaning"></div>
+  </div>
+
+  <div id="journal">
+    <div class="journalHeader">
+      <div>
+        <div class="eyebrow">FIELD JOURNAL</div>
+        <h2>What the world has taught you</h2>
+      </div>
+      <button id="closeJournal">CLOSE J</button>
+    </div>
+
+    <div class="journalProgressBlock">
+      <div class="journalProgressHeader">
+        <span>MODEL COHERENCE</span>
+        <strong id="journalProgressText">0%</strong>
+      </div>
+      <div class="journalProgressTrack"><div id="journalProgressFill"></div></div>
+      <div id="journeyNodes"></div>
+      <div id="journalBonuses"></div>
+    </div>
+
+    <div class="journalColumns journalGrid">
+      <section>
+        <h3>Abilities</h3>
+        <div id="abilityList" class="journalList"></div>
+      </section>
+      <section>
+        <h3>Laws</h3>
+        <div id="knownList" class="journalList"></div>
+      </section>
+      <section>
+        <h3>Observations</h3>
+        <div id="secretList" class="journalList"></div>
+      </section>
+      <section>
+        <h3>Bonds</h3>
+        <div id="bondList" class="journalList"></div>
+      </section>
+      <section>
+        <h3>Anomalies</h3>
+        <div id="anomalyList" class="journalList"></div>
+      </section>
+    </div>
+  </div>
+
+  <div id="acquisition" aria-live="assertive">
+    <div class="acquisitionInner">
+      <div id="acquisitionKicker">ACQUIRED</div>
+      <div class="acquisitionStage">
+        <div class="acquisitionRays"></div>
+        <div id="acquisitionGlyph">2</div>
+        <div class="acquisitionBeam"></div>
+        <div class="acquisitionP"></div>
+      </div>
+      <div id="acquisitionTitle">PRIME PULSE</div>
+      <div id="acquisitionBody"></div>
+      <div id="acquisitionEffect"></div>
+      <button id="acquisitionButton">CONTINUE</button>
+    </div>
+  </div>
+
+  <div id="startScreen" class="panel visible adventureStart">
+    <div class="panel-inner">
+      <div class="eyebrow">PHASE • CHAPTER I</div>
+      <h1>PHASE</h1>
+      <p class="hookLine">Every journey begins somewhere.</p>
+      <p class="concept">For P, that place is Origin.</p>
+      <button id="startButton">WAKE</button>
+    </div>
+  </div>
+
+  <div id="completePanel" class="panel">
+    <div class="panel-inner">
+      <div class="eyebrow">FIRST SIGNAL • COMPLETE</div>
+      <h2 id="completeTitle">It came with you.</h2>
+      <p id="completeSummary"></p>
+      <div id="completeStats" class="completeStats"></div>
+      <button id="continueButton">KEEP EXPLORING</button>
+      <button id="replayButton" class="secondaryButton">REPLAY DEMO</button>
+    </div>
+  </div>
+
   <script src="adv2_core.js"></script>
   <script src="adv2_audio.js"></script>
   <script src="adv2_gameplay.js"></script>
@@ -38,6 +152,7 @@
   <script src="adv6_origin_hub.js"></script>
   <script src="adv6_render.js"></script>
   <script src="adv6_reveal.js"></script>
+  <script src="adv7_progression.js"></script>
   <script src="adv2_main.js"></script>
 </body>
 </html>
