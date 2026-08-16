@@ -1,0 +1,108 @@
+#storyMoment {
+  position: fixed;
+  inset: 0;
+  z-index: 150;
+  display: grid;
+  place-items: center;
+  padding: 32px;
+  opacity: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 50% 46%, rgba(17, 39, 64, 0.24), rgba(2, 5, 11, 0.78) 44%, rgba(1, 3, 7, 0.94) 100%);
+  backdrop-filter: blur(3px);
+  transition: opacity 280ms ease;
+}
+
+#storyMoment.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.storyMomentInner {
+  position: relative;
+  width: min(760px, calc(100vw - 52px));
+  padding: 58px 48px 42px;
+  text-align: center;
+  transform: translateY(12px) scale(.985);
+  transition: transform 340ms cubic-bezier(.2,.8,.2,1);
+}
+
+#storyMoment.visible .storyMomentInner {
+  transform: translateY(0) scale(1);
+}
+
+.storyMomentInner::before,
+.storyMomentInner::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  width: min(520px, 70vw);
+  height: 1px;
+  transform: translateX(-50%);
+  background: linear-gradient(90deg, transparent, rgba(152,225,255,.28), transparent);
+}
+
+.storyMomentInner::before { top: 24px; }
+.storyMomentInner::after { bottom: 20px; }
+
+#storyMomentKicker {
+  font: 850 10px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  letter-spacing: .34em;
+  color: rgba(154, 222, 255, .62);
+}
+
+#storyMomentTitle {
+  margin-top: 14px;
+  font-size: clamp(38px, 7vw, 82px);
+  font-weight: 900;
+  letter-spacing: .15em;
+  color: rgba(248,252,255,.99);
+  text-shadow: 0 0 42px rgba(108,214,255,.16);
+}
+
+#storyMomentBody {
+  max-width: 560px;
+  margin: 18px auto 0;
+  font-size: clamp(14px, 1.7vw, 19px);
+  line-height: 1.6;
+  color: rgba(225,239,251,.78);
+}
+
+#storyMomentMark {
+  margin-top: 21px;
+  font: 850 10px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  letter-spacing: .2em;
+  color: rgba(255,222,165,.84);
+}
+
+#storyMomentButton {
+  margin-top: 29px;
+  min-width: 170px;
+}
+
+#storyMomentButton:disabled {
+  opacity: .25;
+  cursor: default;
+}
+
+#storyMoment[data-kind="break"] {
+  background:
+    radial-gradient(circle at 50% 46%, rgba(107, 55, 147, .22), rgba(5, 5, 15, .84) 46%, rgba(1,2,7,.96) 100%);
+}
+
+#storyMoment[data-kind="break"] #storyMomentTitle {
+  color: rgba(245,231,255,.99);
+  text-shadow: 0 0 48px rgba(203,133,255,.2);
+}
+
+#storyMoment[data-kind="reach"] #storyMomentTitle {
+  color: rgba(231,242,255,.99);
+  text-shadow: 0 0 48px rgba(184,139,255,.18);
+}
+
+@media (max-width:700px) {
+  #storyMoment { padding:18px; }
+  .storyMomentInner { padding:44px 18px 34px; width:100%; }
+  #storyMomentTitle { font-size:34px; letter-spacing:.1em; }
+  #storyMomentBody { font-size:14px; }
+}
