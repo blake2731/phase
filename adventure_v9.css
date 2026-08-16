@@ -1,0 +1,131 @@
+/* PHASE v9: one information language */
+#openingSequence {
+  inset: 0 !important;
+}
+
+.openingCard,
+#openingSequence[data-phase="break"] .openingCard,
+#openingSequence[data-phase="signal"] .openingCard,
+#openingSequence[data-phase="depart"] .openingCard {
+  left: auto !important;
+  right: 22px !important;
+  top: 22px !important;
+  bottom: auto !important;
+  width: min(340px, calc(100vw - 44px)) !important;
+  padding: 16px 18px 15px !important;
+  transform: none !important;
+  text-align: left !important;
+  border: 1px solid rgba(193, 226, 255, 0.14) !important;
+  border-left: 3px solid rgba(255, 222, 165, 0.62) !important;
+  border-radius: 9px !important;
+  background: linear-gradient(90deg, rgba(3, 9, 18, 0.95), rgba(3, 9, 18, 0.72)) !important;
+  box-shadow: 0 18px 58px rgba(0,0,0,0.44), inset 0 0 38px rgba(104,191,235,0.025) !important;
+}
+
+#openingSequence[data-phase="break"] .openingCard {
+  border-left-color: rgba(224, 184, 255, 0.72) !important;
+}
+
+#openingTitle {
+  font-size: 18px !important;
+  letter-spacing: 0.07em !important;
+}
+
+#openingPrompt {
+  margin: 6px 0 0 !important;
+  max-width: 300px !important;
+  font-size: 11px !important;
+  line-height: 1.45 !important;
+}
+
+#openingReady {
+  margin-top: 9px !important;
+}
+
+/* Journal entries read like an illustrated field guide. */
+#journal .journalEntry {
+  min-height: 78px;
+  padding-right: 112px;
+}
+
+#journal .abilityEntry {
+  min-height: 82px;
+}
+
+.journalSketch {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  width: 88px;
+  height: 52px;
+  transform: translateY(-50%);
+  display: grid;
+  place-items: center;
+  border-left: 1px solid rgba(154, 219, 255, 0.08);
+  opacity: 0.78;
+}
+
+.journalSketch svg {
+  width: 82px;
+  height: 48px;
+  fill: none;
+  stroke: rgba(159, 226, 255, 0.54);
+  stroke-width: 1.25;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  overflow: visible;
+}
+
+#keyItemList .journalSketch svg,
+#bondList .journalSketch svg,
+#anomalyList .journalSketch svg {
+  stroke: rgba(215, 183, 255, 0.58);
+}
+
+#journal .journalEntry strong {
+  max-width: calc(100% - 4px);
+}
+
+#journal .journalEntry > span:not(.journalEffect) {
+  max-width: 520px;
+  line-height: 1.45;
+}
+
+.journalProgressTrack {
+  height: 6px;
+}
+
+#journalProgressFill {
+  min-width: 0;
+  transition: width 360ms cubic-bezier(.2,.8,.2,1);
+}
+
+/* The expanded south field is a place, not a screen edge. */
+body::before {
+  content: "";
+  pointer-events: none;
+}
+
+@media (max-width: 760px) {
+  .openingCard,
+  #openingSequence[data-phase="break"] .openingCard,
+  #openingSequence[data-phase="signal"] .openingCard,
+  #openingSequence[data-phase="depart"] .openingCard {
+    left: 12px !important;
+    right: 12px !important;
+    top: 12px !important;
+    width: auto !important;
+  }
+
+  #journal .journalEntry {
+    padding-right: 92px;
+  }
+
+  .journalSketch {
+    width: 72px;
+  }
+
+  .journalSketch svg {
+    width: 66px;
+  }
+}
