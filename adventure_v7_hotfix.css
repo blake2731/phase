@@ -1,0 +1,16 @@
+/* v7 interface placement hotfix */
+#quest {
+  left: auto;
+  right: 22px;
+  top: 22px;
+  bottom: auto;
+}
+
+@media (max-width: 700px) {
+  #quest {
+    left: auto;
+    right: 12px;
+    top: 12px;
+    bottom: auto;
+  }
+}
