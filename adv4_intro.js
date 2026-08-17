@@ -33,16 +33,31 @@
     Object.assign(G.intro,{active:true,phase:"wake",phaseTime:0,elapsed:0,lastX:p.x,lastY:p.y,origin:{...ORIGIN,broken:false,pulse:0},breakAge:99});
     G.el.startScreen.classList.remove("visible");G.el.hud.classList.add("storyHidden");G.el.help.classList.add("storyHidden");G.el.quest.classList.add("storyHidden");G.el.discovery.classList.remove("visible");G.el.completePanel.classList.remove("visible");
     if(G.startMusic)G.startMusic();else G.ensureAudio();
-    setNarrative("THIS IS P.","This is home.");
+    setNarrative("THIS IS P.","A point with one memory: home.");
   }
 
-  function enterHome(){setPhase("home");G.tone(220,0.18,0.011,"sine");setNarrative("WAKE THE LIGHTS.","Walk to them.","0 / 4");}
+  function enterHome(){setPhase("home");G.tone(220,0.18,0.011,"sine");setNarrative("WAKE THE LIGHTS.","This is how the old song begins.","0 / 4");}
   function wakeHomeLight(light,index){
     if(light.active)return;light.active=true;light.activatedAt=G.gameTime;G.intro.origin.pulse=1;G.tone(HOME_FREQS[index],0.28,0.014,index%2?"triangle":"sine");
     const awake=G.intro.homeLights.filter(item=>item.active).length;ui.ready.textContent=awake+" / 4";
-    if(awake===4)setTimeout(enterReturn,800);
+    if(awake===4)setTimeout(enterMemory,650);
   }
-  function enterReturn(){if(!G.intro.active||G.intro.phase!=="home")return;setPhase("return");G.chord(110,[1,5/4,3/2,15/8]);setNarrative("COME HOME.","","RETURN TO THE CENTER • SPACE");}
+  function enterMemory(){
+    if(!G.intro.active||G.intro.phase!=="home")return;
+    setPhase("memory");hideNarrative();
+    if(G.showStoryMoment){
+      G.showStoryMoment({
+        kind:"memory",
+        kicker:"THE RITUAL",
+        title:"FOUR NOTES",
+        body:"P does not remember learning them. Only that when all four return to Origin, they mean home.",
+        mark:"4 LIGHTS • 1 SONG",
+        minMs:2100,
+        onClose:enterReturn
+      });
+    } else enterReturn();
+  }
+  function enterReturn(){if(!G.intro.active||!["home","memory"].includes(G.intro.phase))return;setPhase("return");G.chord(110,[1,5/4,3/2,15/8]);setNarrative("COME HOME.","","RETURN TO THE CENTER • SPACE");}
   function answerOrigin(){
     if(G.intro.phase!=="return")return;
     if(Math.hypot(p.x-ORIGIN.x,p.y-ORIGIN.y)>150){G.showMessage("COME CLOSER",700);return;}
