@@ -8,11 +8,30 @@
   const acquisitionGlyph = document.getElementById("acquisitionGlyph");
   const story = document.getElementById("storyMoment");
   const storyTitle = document.getElementById("storyMomentTitle");
+  const rawTone = G.tone;
+  const rawChord = G.chord;
   let lastCueAt = -Infinity;
+  let suppressLegacySecretUntil = -Infinity;
 
   function tone(freq, delay, duration, gain, type = "triangle") {
-    G.tone?.(freq, duration, gain, type, delay);
+    rawTone?.(freq, duration, gain, type, delay);
   }
+
+  // Older observation code adds the same 392 -> 523.25 success chirp to every
+  // secret. Keep it as a fallback, but suppress it when the semantic cue owns
+  // the moment so categories remain recognizable by ear.
+  G.tone = (freq, duration = .1, gainValue = .025, type = "sine", delay = 0) => {
+    const legacySecret = Math.abs(freq - 392) < .02 || Math.abs(freq - 523.25) < .02;
+    if (legacySecret && performance.now() < suppressLegacySecretUntil) return;
+    rawTone?.(freq, duration, gainValue, type, delay);
+  };
+
+  // Acquisition and story overlays used to add the same generic chord to
+  // almost every important event. Their dedicated cue now carries that role.
+  G.chord = (root, ratios) => {
+    if (acquisition?.classList.contains("visible") || story?.classList.contains("visible")) return;
+    rawChord?.(root, ratios);
+  };
 
   function beginCue(duck = .12, hold = .85) {
     G.ensureAudio?.();
@@ -22,6 +41,7 @@
     return true;
   }
 
+  // Laws and understood relationships end on the octave: knowledge settles.
   function resolved(root = 196) {
     if (!beginCue(.10, .9)) return;
     tone(root, 0, .42, .010, "sine");
@@ -29,6 +49,8 @@
     tone(root * 2, .34, .62, .019, "sine");
   }
 
+  // Observations rise but do not cadence home. They should sound intriguing,
+  // not equivalent to solving a required puzzle.
   function observation(root = 261.63) {
     if (!beginCue(.16, .72)) return;
     tone(root * 5 / 4, 0, .24, .009, "sine");
@@ -36,6 +58,7 @@
     tone(root * 15 / 8, .39, .52, .008, "sine");
   }
 
+  // World changes begin low and expand upward, mirroring a field opening.
   function worldChange(root = 130.81) {
     if (!beginCue(.065, 1.15)) return;
     tone(root, 0, .70, .015, "sine");
@@ -44,6 +67,7 @@
     tone(root * 5 / 2, .48, .58, .008, "triangle");
   }
 
+  // Anomalies deliberately avoid the expected octave resolution.
   function anomaly(root = 174.61) {
     if (!beginCue(.12, .92)) return;
     tone(root, 0, .44, .010, "sine");
@@ -51,6 +75,7 @@
     tone(root * 7 / 4, .31, .74, .008, "sine");
   }
 
+  // Learned modes get a contour whose note count reflects the learned prime.
   function modeCue(prime) {
     if (!beginCue(.08, 1.05)) return;
     const root = 196;
@@ -79,6 +104,7 @@
     tone(87.31, .05, .62, .008, "sine");
   }
 
+  // Two sustained voices converge into one octave for relationship/bond events.
   function bondCue() {
     if (!beginCue(.07, 1.25)) return;
     tone(220 * 5/4, 0, .72, .011, "sine");
@@ -110,6 +136,7 @@
 
   const baseDiscovery = G.showDiscovery;
   G.showDiscovery = (title, formula, meaning, duration, isObservation) => {
+    if (isObservation) suppressLegacySecretUntil = performance.now() + 260;
     const result = baseDiscovery(title, formula, meaning, duration, isObservation);
     if (["ORIGIN HOLDS","PATH OPEN","GATE OPEN"].includes(title)) return result;
     if (performance.now() - lastCueAt < 120) return result;
