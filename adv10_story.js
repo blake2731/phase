@@ -16,6 +16,7 @@
   const queue = [];
   let active = false;
   let unlockAt = 0;
+  let currentItem = null;
 
   function releaseInput() {
     if (G.releaseMovement) G.releaseMovement();
@@ -29,6 +30,7 @@
   function openNext() {
     if (active || !queue.length) return;
     const item = queue.shift();
+    currentItem = item;
     active = true;
     unlockAt = performance.now() + (item.minMs || 1250);
     releaseInput();
@@ -53,11 +55,16 @@
 
   function close() {
     if (!active || performance.now() < unlockAt) return;
+    const finished = currentItem;
+    currentItem = null;
     active = false;
     ui.wrap.classList.remove("visible");
     releaseInput();
     G.lastTime = performance.now();
-    window.setTimeout(openNext, 140);
+    window.setTimeout(() => {
+      if (typeof finished?.onClose === "function") finished.onClose();
+      openNext();
+    }, 160);
   }
 
   ui.button.addEventListener("click", close);
@@ -81,11 +88,11 @@
     baseStart();
     show({
       kind:"origin",
-      kicker:"CHAPTER I",
+      kicker:"THE FIRST MEMORY",
       title:"ORIGIN",
-      body:"P wakes at the only place it remembers.",
+      body:"Before P knew paths, there was one place that always answered.",
       mark:"HOME",
-      minMs:1700
+      minMs:1900
     });
   };
 
@@ -107,7 +114,7 @@
         title:"ORIGIN BREAKS",
         body:"Three notes are torn from home.",
         mark:"3 MISSING",
-        minMs:1500
+        minMs:1700
       });
     }
   };
