@@ -44,6 +44,8 @@
   }
 
   function playCleanResponse(delay=1.14) {
+    G.ensureAudio?.();
+    G.duckMusic?.(.05, 1.3, .72);
     playTone(RESPONSE_NOTE, delay, .82, .026, "sine");
     playTone(RESPONSE_NOTE/2, delay+.02, .88, .008, "sine");
   }
@@ -112,12 +114,13 @@
     G.refreshJournal?.();
   }
 
-  function showWhenClear(item, delay=180) {
+  function showWhenClear(item, delay=180, beforeShow=null) {
     const tryShow = () => {
       if (s.acquisitionActive || G.storyMomentActive?.()) {
         window.setTimeout(tryShow, 120);
         return;
       }
+      if (typeof beforeShow === "function") beforeShow();
       G.showStoryMoment?.(item);
     };
     window.setTimeout(tryShow, delay);
@@ -125,6 +128,13 @@
 
   const baseStory = G.showStoryMoment;
   G.showStoryMoment = item => {
+    if (item?.title === "ORIGIN") {
+      return baseStory?.({
+        ...item,
+        body:"Before P knew paths, there was one place it could always return.",
+        mark:"HOME"
+      });
+    }
     if (item?.title === "ORIGIN BREAKS") {
       return baseStory?.({
         ...item,
@@ -141,7 +151,6 @@
       ensure();
       s.v16.originRestored = true;
       addOrUpdateAnswerBond("broken");
-      playCall({ broken:true });
       showWhenClear({
         kind:"origin",
         kicker:"THE CHORD RETURNS",
@@ -149,7 +158,7 @@
         body:"The four notes return. The fifth voice does not answer from beyond. Its broken echo is here.",
         mark:"THE ANSWER IS NOT",
         minMs:2750
-      });
+      }, 180, () => playCall({ broken:true }));
       return;
     }
     return baseDiscovery(title, formula, meaning, duration, observation);
@@ -175,14 +184,7 @@
         addOrUpdateAnswerBond("phi");
         G.updateQuest?.();
       }
-    }, 320);
-
-    window.setTimeout(() => {
-      if (s.v16.phiRevealQueued) {
-        G.duckMusic?.(.05, 1.4, .75);
-        playCleanResponse(0);
-      }
-    }, 650);
+    }, 320, () => playCleanResponse(0));
   };
 
   const baseQuest = G.updateQuest;
