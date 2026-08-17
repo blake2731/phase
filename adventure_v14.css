@@ -1,0 +1,43 @@
+/* v14 presentation stability.
+   Guarded overlays are never allowed to paint their legacy fully-rendered
+   state before the attention phase has been established. */
+
+#storyMoment.visible:not([data-attention-phase]) .storyMomentInner,
+#acquisition.visible:not([data-attention-phase]) .acquisitionInner {
+  opacity: 0 !important;
+  transform: scale(.965) !important;
+}
+
+#storyMoment[data-attention-phase="settle"] .storyMomentInner,
+#acquisition[data-attention-phase="settle"] .acquisitionInner {
+  opacity: 1;
+}
+
+#storyMoment:not([data-attention-phase="ready"]) #storyMomentButton,
+#acquisition:not([data-attention-phase="ready"]) #acquisitionButton {
+  visibility: hidden;
+  pointer-events: none !important;
+}
+
+#storyMoment[data-attention-phase="ready"] #storyMomentButton,
+#acquisition[data-attention-phase="ready"] #acquisitionButton {
+  visibility: visible;
+}
+
+/* A slightly quieter first beat makes the later reveal read as one continuous
+   presentation rather than two UI states swapping places. */
+#storyMoment[data-attention-phase="settle"] .storyMomentInner,
+#acquisition[data-attention-phase="settle"] .acquisitionInner {
+  filter: saturate(.82) brightness(.9);
+}
+
+#storyMoment[data-attention-phase="title"] .storyMomentInner,
+#storyMoment[data-attention-phase="meaning"] .storyMomentInner,
+#storyMoment[data-attention-phase="ready"] .storyMomentInner,
+#acquisition[data-attention-phase="symbol"] .acquisitionInner,
+#acquisition[data-attention-phase="title"] .acquisitionInner,
+#acquisition[data-attention-phase="meaning"] .acquisitionInner,
+#acquisition[data-attention-phase="ready"] .acquisitionInner {
+  filter: none;
+  transition: transform 520ms cubic-bezier(.18,.78,.2,1), opacity 420ms ease, filter 520ms ease;
+}
