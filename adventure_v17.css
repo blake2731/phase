@@ -1,0 +1,110 @@
+/* PHASE v17: journal hierarchy and observation clarity */
+#journal .journalSectionWide {
+  grid-column: 1 / -1;
+}
+
+#journal .observationsSection > h3 {
+  margin-bottom: 10px;
+}
+
+#secretList {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+#secretList .journalEntry.v17Observation {
+  min-height: 112px;
+  padding: 14px 96px 14px 14px;
+  overflow: hidden;
+}
+
+#secretList .journalEntry.v17Observation .journalGlyph.journalFormulaBadge {
+  position: static;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  min-height: 22px;
+  margin: 0 0 9px;
+  padding: 4px 7px;
+  border-radius: 6px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 8.5px;
+  line-height: 1.2;
+  letter-spacing: .01em;
+  color: rgba(191, 226, 255, .78);
+  background: rgba(111, 192, 235, .035);
+}
+
+#secretList .journalEntry.v17Observation strong {
+  display: block;
+  max-width: none;
+  margin-bottom: 5px;
+  font-size: 11px;
+  line-height: 1.25;
+  letter-spacing: .025em;
+}
+
+#secretList .journalEntry.v17Observation > span:not(.journalEffect) {
+  display: block;
+  max-width: none;
+  font-size: 9.5px;
+  line-height: 1.5;
+  color: rgba(221, 233, 247, .58);
+}
+
+#secretList .journalEntry.v17Observation .journalEffect {
+  margin-top: 7px;
+  line-height: 1.35;
+}
+
+#secretList .journalSketch.v17Sketch {
+  right: 10px;
+  width: 76px;
+  height: 58px;
+  border-left-color: rgba(154, 219, 255, .055);
+  opacity: .62;
+}
+
+#secretList .journalSketch.v17Sketch svg {
+  width: 70px;
+  height: 50px;
+  stroke-width: 1.15;
+}
+
+/* The observation formula already carries strong structure. Keep the visual
+   illustration secondary rather than competing with the title. */
+#secretList .journalEntry.v17Observation:hover .journalSketch.v17Sketch {
+  opacity: .82;
+}
+
+@media (max-width: 900px) {
+  #secretList {
+    grid-template-columns: 1fr;
+  }
+
+  #secretList .journalEntry.v17Observation {
+    padding-right: 92px;
+  }
+}
+
+@media (max-width: 620px) {
+  #secretList .journalEntry.v17Observation {
+    padding: 13px 14px;
+  }
+
+  #secretList .journalSketch.v17Sketch {
+    position: static;
+    width: 100%;
+    height: 42px;
+    margin-top: 9px;
+    transform: none;
+    border-left: 0;
+    border-top: 1px solid rgba(154, 219, 255, .055);
+  }
+}
