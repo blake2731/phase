@@ -2,6 +2,7 @@
   "use strict";
   const G = window.PHASEV2;
   if (!G) return;
+  const s = G.state;
   const ui = {
     wrap: document.getElementById("storyMoment"),
     kicker: document.getElementById("storyMomentKicker"),
@@ -84,8 +85,7 @@
       title:"ORIGIN",
       body:"P wakes at the only place it remembers.",
       mark:"HOME",
-      minMs:1700,
-      chord:[1, 5/4, 3/2, 15/8]
+      minMs:1700
     });
   };
 
@@ -107,8 +107,7 @@
         title:"ORIGIN BREAKS",
         body:"Three notes are torn from home.",
         mark:"3 MISSING",
-        minMs:1500,
-        chord:[1, 6/5, 7/5]
+        minMs:1500
       });
     }
   };
