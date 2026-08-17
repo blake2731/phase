@@ -25,6 +25,7 @@
       openedAt:0,
       readyAt:0,
       lastConfirmAt:-Infinity,
+      keyboardCommit:false,
       timers:[]
     };
 
@@ -43,6 +44,7 @@
       rec.openedAt = performance.now();
       rec.readyAt = rec.openedAt + minMs;
       rec.lastConfirmAt = rec.openedAt;
+      rec.keyboardCommit = false;
       button.disabled = true;
       wrap.dataset.attentionPhase = phases[0].name;
       G.releaseMovement?.();
@@ -56,6 +58,7 @@
     function closed() {
       clearTimers();
       rec.visible = false;
+      rec.keyboardCommit = false;
       delete wrap.dataset.attentionPhase;
       button.disabled = false;
       postBoundaryUntil = performance.now() + POST_BOUNDARY_MS;
@@ -96,7 +99,7 @@
   }
 
   function refreshReadyState(rec) {
-    if (!rec?.visible) return;
+    if (!rec?.visible || rec.keyboardCommit) return;
     const now = performance.now();
     const ready = now >= rec.readyAt && now - rec.lastConfirmAt >= QUIET_MS;
     rec.button.disabled = !ready;
@@ -119,6 +122,9 @@
 
         if (!CONFIRM.has(event.code) || event.repeat) return;
         if (now < rec.readyAt || !quietBeforePress) return;
+
+        rec.keyboardCommit = true;
+        rec.button.disabled = false;
         rec.button.click();
         return;
       }
@@ -141,6 +147,11 @@
     if (!rec || !rec.wrap.contains(event.target)) return;
 
     if (event.target === rec.button) {
+      if (rec.keyboardCommit && !event.isTrusted) {
+        rec.keyboardCommit = false;
+        return;
+      }
+
       refreshReadyState(rec);
       if (rec.button.disabled) {
         event.preventDefault();
