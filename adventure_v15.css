@@ -1,0 +1,24 @@
+#storyMoment[data-kind="memory"] {
+  background:
+    radial-gradient(circle at 50% 46%, rgba(112, 159, 188, .20), rgba(7, 12, 18, .88) 46%, rgba(1, 3, 7, .97) 100%);
+}
+
+#storyMoment[data-kind="memory"] #storyMomentKicker {
+  color: rgba(185, 226, 244, .66);
+}
+
+#storyMoment[data-kind="memory"] #storyMomentTitle {
+  color: rgba(244, 249, 247, .99);
+  text-shadow:
+    0 0 34px rgba(149, 220, 232, .16),
+    0 0 72px rgba(244, 213, 155, .08);
+}
+
+#storyMoment[data-kind="memory"] #storyMomentMark {
+  color: rgba(244, 218, 168, .82);
+}
+
+#storyMoment[data-kind="memory"] .storyMomentInner::before,
+#storyMoment[data-kind="memory"] .storyMomentInner::after {
+  background: linear-gradient(90deg, transparent, rgba(183, 229, 238, .20), rgba(246, 218, 166, .18), transparent);
+}
