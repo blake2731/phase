@@ -1,0 +1,57 @@
+/* v12 curiosity pass: unresolved questions are visually distinct from solved knowledge. */
+#questionList .questionEntry {
+  min-height: 72px;
+  padding-right: 78px;
+  overflow: hidden;
+}
+
+.questionEntry::after {
+  content: "";
+  position: absolute;
+  right: 18px;
+  top: 17px;
+  width: 34px;
+  height: 34px;
+  border: 1px solid rgba(213, 185, 255, 0.24);
+  border-right-color: transparent;
+  border-radius: 50%;
+  box-shadow: 0 0 18px rgba(190, 146, 255, 0.08);
+  transform: rotate(-24deg);
+}
+
+.questionEntry.resolved::after {
+  border-color: rgba(154, 231, 255, 0.32);
+  box-shadow: 0 0 18px rgba(112, 219, 255, 0.10);
+}
+
+.questionEntry.open {
+  border-color: rgba(202, 165, 255, 0.13);
+  background: linear-gradient(105deg, rgba(162, 105, 220, 0.035), rgba(74, 180, 220, 0.018));
+}
+
+.questionEntry.resolved {
+  opacity: 0.72;
+  border-color: rgba(143, 221, 255, 0.10);
+}
+
+.questionGlyph {
+  color: rgba(226, 206, 255, 0.92);
+  border-color: rgba(207, 175, 255, 0.22);
+}
+
+.questionEntry.resolved .questionGlyph {
+  color: rgba(194, 239, 255, 0.88);
+  border-color: rgba(153, 228, 255, 0.20);
+}
+
+.questionState {
+  display: block;
+  margin-top: 7px;
+  font: 800 8px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  letter-spacing: 0.14em;
+  color: rgba(205, 176, 255, 0.65) !important;
+}
+
+.questionEntry.resolved .questionState {
+  color: rgba(151, 225, 255, 0.58) !important;
+}
