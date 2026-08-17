@@ -38,6 +38,11 @@
       if (rec.visible) wrap.dataset.attentionPhase = name;
     }
 
+    function armSettledState() {
+      wrap.dataset.attentionPhase = phases[0].name;
+      button.disabled = true;
+    }
+
     function opened() {
       clearTimers();
       rec.visible = true;
@@ -45,8 +50,7 @@
       rec.readyAt = rec.openedAt + minMs;
       rec.lastConfirmAt = rec.openedAt;
       rec.keyboardCommit = false;
-      button.disabled = true;
-      wrap.dataset.attentionPhase = phases[0].name;
+      armSettledState();
       G.releaseMovement?.();
 
       phases.slice(1).forEach(phase => {
@@ -59,12 +63,16 @@
       clearTimers();
       rec.visible = false;
       rec.keyboardCommit = false;
-      delete wrap.dataset.attentionPhase;
-      button.disabled = false;
+      armSettledState();
       postBoundaryUntil = performance.now() + POST_BOUNDARY_MS;
       G.releaseMovement?.();
       if (!overlays.some(o => o.visible)) document.body.classList.remove("phaseFocus");
     }
+
+    // Keep every guarded overlay pre-armed while hidden. When an older layer
+    // adds .visible, the browser never gets a frame where the legacy fully
+    // rendered popup can paint before the attention sequence takes over.
+    armSettledState();
 
     const observer = new MutationObserver(() => {
       const nowVisible = wrap.classList.contains("visible");
