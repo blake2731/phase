@@ -2,7 +2,6 @@
   "use strict";
   const G = window.PHASEV2;
   if (!G) return;
-  const s = G.state;
   const ui = {
     wrap: document.getElementById("storyMoment"),
     kicker: document.getElementById("storyMomentKicker"),
@@ -98,10 +97,8 @@
     }
 
     const phaseBefore = G.intro?.phase;
-    const farBefore = Boolean(s.v10?.farFieldStarted);
     baseUpdate(dt);
     const phaseAfter = G.intro?.phase;
-    const farAfter = Boolean(s.v10?.farFieldStarted);
 
     if (phaseBefore !== "break" && phaseAfter === "break") {
       show({
@@ -112,18 +109,6 @@
         mark:"3 MISSING",
         minMs:1500,
         chord:[1, 6/5, 7/5]
-      });
-    }
-
-    if (!farBefore && farAfter) {
-      show({
-        kind:"reach",
-        kicker:"BEYOND THE RELAY",
-        title:"ECHO REACH",
-        body:"The signal continues farther east.",
-        mark:"SOURCE UNKNOWN",
-        minMs:1450,
-        chord:[1, 9/8, 3/2, 15/8]
       });
     }
   };
