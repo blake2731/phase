@@ -5,6 +5,7 @@
 
   const PHI = (1 + Math.sqrt(5)) / 2;
   const JUST = [1, 9 / 8, 5 / 4, 4 / 3, 3 / 2, 5 / 3, 15 / 8];
+  const MUSIC_BASE_GAIN = 0.32;
   const AREA_ROOT = {
     "FIRST CLEARING": 55,
     "COORDINATE BASIN": 55 * 9 / 8,
@@ -28,7 +29,7 @@
     const compressor = ctx.createDynamicsCompressor();
 
     master.gain.value = 0.82;
-    music.gain.value = 0.32;
+    music.gain.value = MUSIC_BASE_GAIN;
     sfx.gain.value = 0.78;
     compressor.threshold.value = -20;
     compressor.knee.value = 18;
@@ -89,6 +90,23 @@
 
   G.chord = (root, ratios) => {
     ratios.forEach((ratio, i) => G.tone(root * ratio, 0.42, 0.015, "sine", i * 0.035));
+  };
+
+  G.duckMusic = (level = 0.075, holdSeconds = 1.45, recoverSeconds = 0.6) => {
+    if (!G.audio) return;
+    const g = buildGraph();
+    if (!g) return;
+    const now = G.audio.currentTime;
+    const target = Math.max(0.015, Math.min(MUSIC_BASE_GAIN, level));
+    const hold = Math.max(0.1, holdSeconds);
+    const recover = Math.max(0.15, recoverSeconds);
+    const current = Math.max(0.0001, g.music.gain.value || MUSIC_BASE_GAIN);
+
+    g.music.gain.cancelScheduledValues(now);
+    g.music.gain.setValueAtTime(current, now);
+    g.music.gain.exponentialRampToValueAtTime(target, now + 0.09);
+    g.music.gain.setValueAtTime(target, now + hold);
+    g.music.gain.exponentialRampToValueAtTime(MUSIC_BASE_GAIN, now + hold + recover);
   };
 
   function padChord(root, ratios, when, duration = 3.8, volume = 0.016) {
