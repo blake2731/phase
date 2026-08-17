@@ -4,11 +4,20 @@
   if (!G) return;
   const s = G.state;
 
+  function showWhenClear(item) {
+    const tryShow = () => {
+      if (s.acquisitionActive || G.storyMomentActive?.()) {
+        window.setTimeout(tryShow, 120);
+        return;
+      }
+      G.showStoryMoment?.(item);
+    };
+    window.setTimeout(tryShow, 180);
+  }
+
   const baseMessage = G.showMessage;
   G.showMessage = (text, duration) => {
     if (G.V13Attention?.isFocused?.()) {
-      // Major moments already own the player's attention. Do not stack
-      // disposable chatter behind them.
       return;
     }
     baseMessage(text, duration);
@@ -17,7 +26,7 @@
   const baseDiscovery = G.showDiscovery;
   G.showDiscovery = (title, formula, meaning, duration, observation) => {
     if (title === "ORIGIN HOLDS") {
-      G.showStoryMoment?.({
+      showWhenClear({
         kind:"origin",
         kicker:"THE CHORD RETURNS",
         title:"ORIGIN HOLDS",
@@ -30,7 +39,7 @@
     }
 
     if (title === "PATH OPEN" || title === "GATE OPEN") {
-      G.showStoryMoment?.({
+      showWhenClear({
         kind:"gate",
         kicker:"THE FIELD CHANGES",
         title:"A PATH EXISTS",
@@ -45,8 +54,6 @@
     baseDiscovery(title, formula, meaning, duration, observation);
   };
 
-  // If a delayed hint from an older layer fires while a major moment has
-  // control, the persistent Current Thread is enough after control returns.
   const baseQuest = G.updateQuest;
   G.updateQuest = () => {
     baseQuest();
