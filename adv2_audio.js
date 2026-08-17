@@ -109,13 +109,16 @@
     g.music.gain.exponentialRampToValueAtTime(MUSIC_BASE_GAIN, now + hold + recover);
   };
 
+  // Exploration pads keep the same harmonic identity, but routine ambience no
+  // longer sustains the 55 Hz fundamental. The lowest sustained voice now sits
+  // an octave higher, leaving the deep register available for real tension.
   function padChord(root, ratios, when, duration = 3.8, volume = 0.016) {
     const g = buildGraph();
     if (!g) return;
     ratios.forEach((ratio, i) => {
-      const f = root * ratio;
-      voice(f, when + i * 0.028, duration, volume, "sine", g.music, i % 2 ? 2.5 : -2.5);
-      voice(f * 2, when + i * 0.028, duration * 0.82, volume * 0.16, "triangle", g.music, i % 2 ? -3 : 3);
+      const f = root * ratio * 2;
+      voice(f, when + i * 0.038, duration * 0.86, volume * 0.82, "sine", g.music, i % 2 ? 2.5 : -2.5);
+      voice(f * 2, when + i * 0.038, duration * 0.68, volume * 0.12, "triangle", g.music, i % 2 ? -3 : 3);
     });
   }
 
@@ -124,6 +127,22 @@
     if (!g) return;
     voice(freq, when, duration, volume, "triangle", g.music);
     voice(freq * 2, when + 0.018, duration * 0.58, volume * 0.22, "sine", g.music);
+  }
+
+  // Instead of one static low drone, exploration gets a quiet four-note bass
+  // contour. It moves through consonant ratios and returns without sounding
+  // like a warning siren under every scene.
+  function bassFigure(root, when, area) {
+    const g = buildGraph();
+    if (!g) return;
+    const figures = area === "RESONANT SPAN"
+      ? [1, 4 / 3, 3 / 2, 9 / 8]
+      : area === "SYMMETRY GARDEN"
+        ? [1, 5 / 4, 15 / 8, 3 / 2]
+        : [1, 3 / 2, 5 / 4, 15 / 8];
+    figures.forEach((ratio, i) => {
+      voice(root * 2 * ratio, when + i * 0.22, 0.48, 0.0048, i % 2 ? "triangle" : "sine", g.music);
+    });
   }
 
   function getRoot() {
@@ -144,6 +163,7 @@
     if (area !== lastArea) {
       lastArea = area;
       padChord(root, [1, 5 / 4, 3 / 2], now, 4.6, 0.015);
+      bassFigure(root, now + 0.18, area);
     }
 
     if (musicStep % 8 === 0) {
@@ -153,6 +173,7 @@
           ? [1, 5 / 4, 3 / 2, 15 / 8]
           : [1, 5 / 4, 3 / 2];
       padChord(root, areaChord, now, 4.8, G.state?.phiRepaired ? 0.018 : 0.014);
+      if (musicStep > 0) bassFigure(root, now + 0.16, area);
     }
 
     if (musicStep % 2 === 0) {
