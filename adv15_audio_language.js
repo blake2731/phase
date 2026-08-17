@@ -17,6 +17,11 @@
     rawTone?.(freq, duration, gain, type, delay);
   }
 
+  function hasCustomStoryCue(title) {
+    return ["ORIGIN","ORIGIN BREAKS","ORIGIN HOLDS","FOUR NOTES","A PATH EXISTS"].includes(title)
+      || /REACH$|ECHO PULSE/i.test(title);
+  }
+
   // Older observation code adds the same 392 -> 523.25 success chirp to every
   // secret. Keep it as a fallback, but suppress it when the semantic cue owns
   // the moment so categories remain recognizable by ear.
@@ -26,10 +31,14 @@
     rawTone?.(freq, duration, gainValue, type, delay);
   };
 
-  // Acquisition and story overlays used to add the same generic chord to
-  // almost every important event. Their dedicated cue now carries that role.
+  // Acquisition overlays now have dedicated cues. Story moments keep their
+  // older chord unless v15 or the Origin motif explicitly owns that title.
   G.chord = (root, ratios) => {
-    if (acquisition?.classList.contains("visible") || story?.classList.contains("visible")) return;
+    if (acquisition?.classList.contains("visible")) return;
+    if (story?.classList.contains("visible")) {
+      const title = storyTitle?.textContent?.trim() || "";
+      if (hasCustomStoryCue(title)) return;
+    }
     rawChord?.(root, ratios);
   };
 
@@ -134,6 +143,12 @@
     resolved(220);
   }
 
+  function playStoryCue(title) {
+    if (title === "FOUR NOTES") return fourNotesCue();
+    if (title === "A PATH EXISTS") return worldChange(146.83);
+    if (/REACH$|ECHO PULSE/i.test(title)) return resolved(220);
+  }
+
   const baseDiscovery = G.showDiscovery;
   G.showDiscovery = (title, formula, meaning, duration, isObservation) => {
     if (isObservation) suppressLegacySecretUntil = performance.now() + 260;
@@ -164,8 +179,7 @@
       const visible = story.classList.contains("visible");
       if (visible && !wasVisible) {
         const title = storyTitle?.textContent?.trim() || "";
-        if (title === "FOUR NOTES") fourNotesCue();
-        else if (title === "A PATH EXISTS") worldChange(146.83);
+        playStoryCue(title);
       }
       wasVisible = visible;
     });
